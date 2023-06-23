@@ -3,6 +3,7 @@ Text mode 3 wheel slot machine in Python
 
 
 The wheel consists of bar, double bar, triple bar, lucky 7, wild cherry, and Double Diamond
+
 Payouts
 <pre>Double Diamond matches anything
 <><>  <><> <><> = 1000x
