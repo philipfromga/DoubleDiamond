@@ -70,7 +70,7 @@ def calc_payout(myPL = [],payout_balance = Balance(0)):
     bonus = 0
     # 3 Double Diamond
     if myPL.count("◇") == 3:
-        payout_balance.add_winnings(winner(PAYOUTS[doubled],bonus))
+        payout_balance.add_winnings(winner(PAYOUTS["doubled"],bonus))
     # 2 Double Diamond defaults to 3 of a kind with a bonus
     elif myPL.count("◇") == 2:
         bonus=4
