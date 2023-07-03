@@ -70,6 +70,11 @@ class Balance:
     def add_winnings(self, tokens):
         self.total += tokens
 
+    def bal_print(self):
+        print("")
+        print("Your Slot Balance is ", self.total)
+        print("")
+
 
 def spinwheel():
     temp = list(SYMBOLS.values())
@@ -94,6 +99,19 @@ def printpl(pllist):
     for i in pllist:
         prtstring = prtstring + str(i)
     art.tprint(prtstring, font="block")
+
+
+def play_or_quit():
+    ret_value = "yes"
+    ret_value = input("Would you like to play Double Diamond Slots?"
+                    "<Type yes or quit>  ")
+    while ret_value not in ["yes","quit"]:
+        ret_value = input("Please re-enter your choice < yes or quit >")
+    return ret_value
+
+def place_bet():
+    print("Playing 3 tokens")
+    return 3
 
 
 def calc_payout(mypl=[], payout_balance=Balance(0)):
@@ -168,23 +186,13 @@ def main():
     mybalance = Balance(50)
     run_app = "yes"
     while run_app == "yes":
-        print("Your Slot Balance is ", mybalance.total)
-        run_app = input("Would you like to play Double Diamond Slots?"
-                        "<Type yes or quit>  ")
+        mybalance.bal_print()
+        run_app = play_or_quit()
         if run_app == "yes":
-            run_app = "yes"
-            print("Playing 3 tokens")
-            mybalance.play_tokens(3)
+            mybalance.play_tokens(place_bet())
             payline = [spinwheel(), spinwheel(), spinwheel()]
             print()
-        #    test_payline(payline)
             calc_payout(payline, mybalance)
-            print("Checking your winnings")
-        elif run_app == "quit":
-            run_app = "no"
-        else:
-            run_app = "yes"
-            print("Please re-enter your choice")
 
 
 # if __name__ == "__main__":
