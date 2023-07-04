@@ -195,5 +195,5 @@ def main():
             calc_payout(payline, mybalance)
 
 
-# if __name__ == "__main__":
-main()
+if __name__ == '__main__':
+    main()
