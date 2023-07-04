@@ -109,9 +109,17 @@ def play_or_quit():
         ret_value = input("Please re-enter your choice < yes or quit >")
     return ret_value
 
-def place_bet():
-    print("Playing 3 tokens")
-    return 3
+def place_bet(avail_tokens):
+    bet_amount = None
+    while bet_amount is None:
+        try:
+            bet_amount = int(input("How many tokens do you want to bet?"))
+        except ValueError:
+            print("Invalid Entry")
+        if avail_tokens-bet_amount <0:
+            print("You don't have enough tokens")
+            bet_amount = None
+    return bet_amount
 
 
 def calc_payout(mypl=[], payout_balance=Balance(0)):
@@ -179,17 +187,16 @@ def calc_payout(mypl=[], payout_balance=Balance(0)):
 
 
 def main():
-    art.tprint("Double", font="1943")
-    art.tprint(" Diamond", font="1943")
-    art.tprint("  Slots", font="1943")
-    art.tprint("◇7≡=-%", font="block")
+    art.tprint("Double", font="tarty3")
+    art.tprint(" Diamond", font="tarty3")
+    art.tprint("  Slots", font="tarty3")
     mybalance = Balance(50)
     run_app = "yes"
     while run_app == "yes":
         mybalance.bal_print()
         run_app = play_or_quit()
         if run_app == "yes":
-            mybalance.play_tokens(place_bet())
+            mybalance.play_tokens(place_bet(mybalance.total))
             payline = [spinwheel(), spinwheel(), spinwheel()]
             print()
             calc_payout(payline, mybalance)
