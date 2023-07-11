@@ -41,6 +41,18 @@ art.text_dic1.block_dic["%"] = ("\n .----------------. \n"
                                 "| '--------------' |\n"
                                 " '----------------' \n")
 
+art.text_dic1.block_dic["_"] = ("\n .----------------. \n"
+                                "| .--------------. |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| |              | |\n"
+                                "| '--------------' |\n"
+                                " '----------------' \n")
+
 SYMBOLS = {"doubled": "◇",
            "sevens": "7",
            "threebars": "≡",
@@ -55,7 +67,8 @@ PAYOUTS = {"doubled": 1000,
            "anybar": 5,
            "threecherry": 10,
            "twocherry": 5,
-           "onecherry": 2}
+           "onecherry": 2,
+           "threeblanks": 3}
 
 
 class Balance:
@@ -77,8 +90,9 @@ class Balance:
 
 
 def spinwheel():
-    temp = list(SYMBOLS.values())
-    randnum = random.randint(0, 5)
+    temp = ("_","7","_","-","_","%","_","◇","_","-","_","≡","_","7","_","-","_","◇","_","=","_","-")
+#    temp = list(SYMBOLS.values())
+    randnum = random.randint(0, 21)
     return temp[randnum]
 
 
@@ -113,10 +127,13 @@ def place_bet(avail_tokens):
     bet_amount = None
     while bet_amount is None:
         try:
-            bet_amount = int(input("How many tokens do you want to bet?"))
+            bet_amount = int(input("How many tokens do you want to bet? 1, 2 or 3: "))
         except ValueError:
             print("Invalid Entry")
-        if avail_tokens-bet_amount <0:
+        if bet_amount not in [1,2,3]:
+            print("You may only enter 1, 2 or 3 tokens")
+            bet_amount = None
+        elif avail_tokens-bet_amount <0:
             print("You don't have enough tokens")
             bet_amount = None
     return bet_amount
@@ -182,6 +199,8 @@ def calc_payout(mypl=[], payout_balance=Balance(0)):
         payout_balance.add_winnings(winner(PAYOUTS["twocherry"], bonus))
     elif mypl.count("%") == 1:
         payout_balance.add_winnings(winner(PAYOUTS["onecherry"], bonus))
+    elif mypl.count("_") == 3:
+        payout_balance.add_winnings(winner(PAYOUTS["threeblanks"], bonus))
     else:
         print("Nothing to win here")
 
